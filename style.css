@@ -1,1 +1,195 @@
-/* Add styles here */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #e10600;
+    --secondary-color: #383838;
+    --background-color: #f0f2f5;
+    --card-bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --text-secondary-color: #555;
+    --font-family-headings: 'Orbitron', sans-serif;
+    --font-family-body: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: var(--font-family-body);
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23e0e0e0" fill-opacity="0.4"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+}
+
+header {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 a {
+    margin: 0;
+    font-family: var(--font-family-headings);
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    color: white;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 0.5rem;
+}
+
+.nav-button {
+    background: none;
+    border: 2px solid transparent;
+    color: white;
+    font-family: var(--font-family-headings);
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.nav-button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(225, 6, 0, 0.7);
+}
+
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+section {
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+section h2 {
+    font-family: var(--font-family-headings);
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+}
+
+/* Home/Intro Styles */
+#intro p {
+    background: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    text-align: center;
+}
+.home-image-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+.home-image-container img {
+    max-width: 400px;
+    opacity: 0.9;
+}
+
+/* Teams & Drivers Grid Styles */
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.team-card {
+    background-color: var(--card-bg-color);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+
+.team-card img {
+    max-width: 80%;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.team-card h3 {
+    font-family: var(--font-family-body);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.drivers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+/* Terminology & News List Styles */
+.terms-container, .news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.term-item, .news-item {
+    background-color: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid var(--primary-color);
+}
+
+.term-item h3, .news-item h3 {
+    font-family: var(--font-family-body);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.news-item .news-summary {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.news-item .news-date {
+    text-align: right;
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+    font-style: italic;
+}

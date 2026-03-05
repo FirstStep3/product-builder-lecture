@@ -1,14 +1,28 @@
-<!doctype html>
-<html lang="en">
+
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 소개 사이트</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <header>
+        <h1><a href="#" id="home-link">F1 Hub</a></h1>
+        <nav>
+            <ul>
+                <li><button class="nav-button" data-content="info-2026">2026 정보</button></li>
+                <li><button class="nav-button" data-content="terminology">F1 용어</button></li>
+                <li><button class="nav-button" data-content="news">뉴스</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- 동적 콘텐츠가 여기에 로드됩니다 -->
+    </main>
+
+    <script src="main.js"></script>
 </body>
 </html>

@@ -3,10 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('main-content');
     const navButtons = document.querySelectorAll('.nav-button');
     const homeLink = document.getElementById('home-link');
+    const themeToggle = document.getElementById('theme-toggle');
+    const modeText = themeToggle.querySelector('.mode-text');
+
+    // --- 테마 설정 ---
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeUI(currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateThemeUI(theme);
+    });
+
+    function updateThemeUI(theme) {
+        modeText.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    }
 
     // --- 데이터 정의 ---
 
-    // Web Component for Driver Card (이미 다른 파일에 있을 수 있으나, 독립 실행을 위해 포함)
+    // Web Component for Driver Card
     if (!customElements.get('driver-card')) {
         class DriverCard extends HTMLElement {
             constructor() {
@@ -16,12 +34,20 @@ document.addEventListener('DOMContentLoaded', () => {
             connectedCallback() {
                 this.shadowRoot.innerHTML = `
                     <style>
-                        :host { display: block; background-color: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; transition: all 0.3s ease; }
+                        :host { 
+                            display: block; 
+                            background-color: var(--card-bg-color, #fff); 
+                            color: var(--text-color, #1a1a1a);
+                            border-radius: 12px; 
+                            box-shadow: var(--card-shadow, 0 4px 15px rgba(0,0,0,0.1)); 
+                            overflow: hidden; 
+                            transition: all 0.3s ease; 
+                        }
                         :host(:hover) { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
                         .driver-card-inner { padding: 1.5rem; text-align: center; }
                         .driver-image { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-color, #e10600); margin-bottom: 1rem; }
                         h3 { margin: 0.5rem 0; font-size: 1.4rem; font-weight: 700; }
-                        p { margin: 0.25rem 0; color: #555; }
+                        p { margin: 0.25rem 0; color: var(--text-secondary-color, #555); }
                         .number { font-weight: bold; font-size: 1.2rem; color: var(--primary-color, #e10600); }
                     </style>
                     <div class="driver-card-inner">

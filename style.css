@@ -8,8 +8,25 @@
     --card-bg-color: #ffffff;
     --text-color: #1a1a1a;
     --text-secondary-color: #555;
+    --header-bg: #383838;
+    --header-text: #ffffff;
     --font-family-headings: 'Orbitron', sans-serif;
     --font-family-body: 'Roboto', sans-serif;
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    --card-shadow: 0 8px 15px rgba(0,0,0,0.07);
+    --border-color: #e0e0e0;
+}
+
+[data-theme="dark"] {
+    --background-color: #121212;
+    --card-bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --text-secondary-color: #b0b0b0;
+    --secondary-color: #1f1f1f;
+    --header-bg: #121212;
+    --shadow: 0 4px 12px rgba(0,0,0,0.5);
+    --card-shadow: 0 8px 15px rgba(0,0,0,0.4);
+    --border-color: #333333;
 }
 
 body {
@@ -17,21 +34,23 @@ body {
     margin: 0;
     background-color: var(--background-color);
     color: var(--text-color);
-    background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23e0e0e0" fill-opacity="0.4"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+    background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23e0e0e0" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header {
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--header-bg);
+    color: var(--header-text);
     padding: 1rem 2rem;
     text-align: center;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color 0.3s ease;
 }
 
 header h1 a {
@@ -39,8 +58,14 @@ header h1 a {
     font-family: var(--font-family-headings);
     font-size: 2.2rem;
     text-transform: uppercase;
-    color: white;
+    color: var(--header-text);
     text-decoration: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 nav ul {
@@ -57,7 +82,7 @@ nav ul li {
 .nav-button {
     background: none;
     border: 2px solid transparent;
-    color: white;
+    color: var(--header-text);
     font-family: var(--font-family-headings);
     font-size: 1rem;
     text-transform: uppercase;
@@ -77,6 +102,26 @@ nav ul li {
     color: white;
     border-color: var(--primary-color);
     box-shadow: 0 0 15px rgba(225, 6, 0, 0.7);
+}
+
+#theme-toggle {
+    background: none;
+    border: 2px solid var(--header-text);
+    color: var(--header-text);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: var(--font-family-body);
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#theme-toggle:hover {
+    background-color: var(--header-text);
+    color: var(--header-bg);
 }
 
 main {
@@ -102,12 +147,14 @@ section h2 {
 /* Home/Intro Styles */
 #intro p {
     background: var(--card-bg-color);
+    color: var(--text-color);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    box-shadow: var(--card-shadow);
     line-height: 1.8;
     font-size: 1.1rem;
     text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .home-image-container {
     text-align: center;
@@ -116,6 +163,11 @@ section h2 {
 .home-image-container img {
     max-width: 400px;
     opacity: 0.9;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.1));
+}
+
+[data-theme="dark"] .home-image-container img {
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.1));
 }
 
 /* Teams & Drivers Grid Styles */
@@ -127,11 +179,12 @@ section h2 {
 
 .team-card {
     background-color: var(--card-bg-color);
+    color: var(--text-color);
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.07);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .team-card:hover {
@@ -139,11 +192,20 @@ section h2 {
     box-shadow: 0 12px 25px rgba(0,0,0,0.1);
 }
 
+[data-theme="dark"] .team-card:hover {
+    box-shadow: 0 12px 25px rgba(0,0,0,0.6);
+}
+
 .team-card img {
     max-width: 80%;
     height: 60px;
     object-fit: contain;
     margin-bottom: 1rem;
+    filter: brightness(1);
+}
+
+[data-theme="dark"] .team-card img {
+    filter: brightness(0.9) invert(0); /* Some logos might need inversion but F1 ones usually don't unless they are pure black */
 }
 
 .team-card h3 {
@@ -168,10 +230,12 @@ section h2 {
 
 .term-item, .news-item {
     background-color: var(--card-bg-color);
+    color: var(--text-color);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    box-shadow: var(--card-shadow);
     border-left: 5px solid var(--primary-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .term-item h3, .news-item h3 {

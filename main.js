@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeLink = document.getElementById('home-link');
     const themeToggle = document.getElementById('theme-toggle');
     const modeText = themeToggle.querySelector('.mode-text');
+    const disqusContainer = document.getElementById('disqus_container');
 
     // --- 테마 설정 ---
     const currentTheme = localStorage.getItem('theme') || 'dark'; // 기본 다크모드 권장
@@ -21,6 +22,44 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateThemeUI(theme) {
         modeText.textContent = theme === 'dark' ? 'Day Mode' : 'Night Mode';
     }
+
+    // --- Disqus 관련 함수 ---
+
+    const resetDisqus = (id, title) => {
+        // 제휴 문의(partnership) 페이지에서는 댓글창을 숨깁니다.
+        if (id === 'partnership') {
+            disqusContainer.style.display = 'none';
+            return;
+        } else {
+            disqusContainer.style.display = 'block';
+        }
+
+        const pageUrl = window.location.origin + '/' + id;
+        
+        if (typeof DISQUS !== 'undefined') {
+            DISQUS.reset({
+                reload: true,
+                config: function () {
+                    this.page.identifier = id;
+                    this.page.url = pageUrl;
+                    this.page.title = title;
+                }
+            });
+        } else {
+            // 최초 로드 시
+            window.disqus_config = function () {
+                this.page.url = pageUrl;
+                this.page.identifier = id;
+                this.page.title = title;
+            };
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://first-step-5.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+    };
 
     // --- 데이터 정의 ---
 
@@ -80,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.querySelector('.hero-cta').addEventListener('click', () => {
             document.querySelector('[data-content="rules"]').click();
         });
+        resetDisqus('home', 'Endurance Hub - Home');
     };
 
     const renderRules = () => {
@@ -99,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </section>
         `;
+        resetDisqus('rules', 'Endurance Hub - Rules');
     };
 
     const renderTerminology = () => {
@@ -118,6 +159,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </section>
         `;
+        resetDisqus('terms', 'Endurance Hub - Terms');
+    };
+
+    const renderPartnership = () => {
+        mainContent.innerHTML = `
+            <section class="animate-fade">
+                <div class="section-header">
+                    <h2>Partnership Inquiry</h2>
+                    <p style="margin-top: 1rem; color: var(--text-secondary-color);">24H Endurance Hub와 함께할 파트너를 기다립니다.</p>
+                </div>
+                <div class="form-container">
+                    <form action="https://formspree.io/f/mbdzreep" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">성함 또는 기업명</label>
+                            <input type="text" id="name" name="name" placeholder="홍길동 / (주)엔듀런스" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">이메일 주소</label>
+                            <input type="email" id="email" name="_replyto" placeholder="example@domain.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">문의 유형</label>
+                            <select id="subject" name="subject" required>
+                                <option value="" disabled selected>유형을 선택해주세요</option>
+                                <option value="partnership">제휴 제안</option>
+                                <option value="advertising">광고 문의</option>
+                                <option value="content">콘텐츠 협업</option>
+                                <option value="other">기타</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">문의 내용</label>
+                            <textarea id="message" name="message" placeholder="자세한 내용을 입력해주세요." required></textarea>
+                        </div>
+                        <!-- Formspree hidden fields -->
+                        <input type="hidden" name="_subject" value="New Partnership Inquiry from 24H Hub">
+                        <button type="submit" class="submit-button">문의 보내기</button>
+                    </form>
+                </div>
+            </section>
+        `;
+        resetDisqus('partnership', 'Endurance Hub - Partnership');
     };
 
     // --- 이벤트 핸들러 ---
@@ -135,6 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'terminology':
                 renderTerminology();
+                break;
+            case 'partnership':
+                renderPartnership();
                 break;
             default:
                 renderHome();
